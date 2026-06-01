@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('image');
-            $table->enum('status', CategoryStatus::cases());
+            $table->enum('status', CategoryStatus::cases())->default(CategoryStatus::DISABLED);
             $table->timestamps();
         });
     }

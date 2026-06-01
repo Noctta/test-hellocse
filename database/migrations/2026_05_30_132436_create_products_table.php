@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->decimal('price', 10, 2);
             $table->string('image');
-            $table->enum('status', ProductStatus::cases());
+            $table->enum('status', ProductStatus::cases())->default(ProductStatus::DRAFT);
             $table->foreignId('category_id')
                   ->constrained()
                   ->cascadeOnDelete();
