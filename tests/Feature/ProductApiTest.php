@@ -3,11 +3,9 @@
 use App\Enums\ProductStatus;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 beforeEach(function () {
-    Storage::fake('public');
     $this->category = Category::factory()->create();
 });
 
@@ -62,7 +60,7 @@ it('can create a product', function () {
     $payload = [
         'name'        => 'MacBook Pro',
         'price'       => 1999.99,
-        'image'       => UploadedFile::fake()->image('product.jpg'),
+        'image'       => "https://www.hellocse.fr/images/logo/hellocse.svg?v=2",
         'status'      => ProductStatus::ONLINE,
         'category_id' => $this->category->id,
     ];
@@ -85,7 +83,7 @@ it('fails to create a product with nonexistent category', function () {
     $payload = [
         'name'        => 'Test',
         'price'       => 10,
-        'image'       => UploadedFile::fake()->image('product.jpg'),
+        'image'       => "https://www.hellocse.fr/images/logo/hellocse.svg?v=2",
         'category_id' => 9999,
     ];
 
@@ -98,7 +96,7 @@ it('fails to create a product with negative price', function () {
     $payload = [
         'name'        => 'Test',
         'price'       => -5,
-        'image'       => UploadedFile::fake()->image('product.jpg'),
+        'image'       => "https://www.hellocse.fr/images/logo/hellocse.svg?v=2",
         'category_id' => $this->category->id,
     ];
 

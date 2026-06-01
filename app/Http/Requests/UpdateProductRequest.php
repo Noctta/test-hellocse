@@ -20,7 +20,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'name'        => ['sometimes', 'string', 'max:255'],
             'price'       => ['sometimes', 'numeric', 'min:0'],
-            'image'       => ['sometimes', 'image', 'max:2048'],
+            'image'       => ['sometimes', 'url'],
             'status'      => ['sometimes', Rule::enum(ProductStatus::class)],
             'category_id' => ['sometimes', 'exists:categories,id'],
         ];

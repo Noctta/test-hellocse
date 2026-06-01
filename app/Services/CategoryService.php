@@ -31,19 +31,12 @@ class CategoryService
 
     public function create(array $data): Category
     {
-        $data['image'] = $this->storeImage($data['image']);
-
         return Category::create($data);
     }
 
 
     public function update(Category $category, array $data): Category
     {
-        if (isset($data['image'])) {
-            $this->deleteImage($category->image);
-            $data['image'] = $this->storeImage($data['image']);
-        }
-
         $category->update($data);
 
         return $category->refresh();
@@ -52,20 +45,6 @@ class CategoryService
  
     public function delete(Category $category): void
     {
-        $this->deleteImage($category->image);
-
         $category->delete();
-    }
-
-
-    private function storeImage(UploadedFile $file): string
-    {
-        return $file->store('categories', 'public');
-    }
-
-
-    private function deleteImage(string $path): void
-    {
-        Storage::disk('public')->delete($path);
     }
 }

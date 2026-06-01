@@ -30,8 +30,6 @@ class ProductService
 
     public function create(array $data): Product
     {
-        $data['image'] = $this->storeImage($data['image']);
-
         $product = Product::create($data);
 
         return $product->load('category');
@@ -40,11 +38,6 @@ class ProductService
 
     public function update(Product $product, array $data): Product
     {
-        if (isset($data['image'])) {
-            $this->deleteImage($product->image);
-            $data['image'] = $this->storeImage($data['image']);
-        }
-
         $product->update($data);
 
         return $product->refresh()->load('category');
@@ -53,20 +46,6 @@ class ProductService
 
     public function delete(Product $product): void
     {
-        $this->deleteImage($product->image);
-
         $product->delete();
-    }
-
-
-    private function storeImage(UploadedFile $file): string
-    {
-        return $file->store('products', 'public');
-    }
-
-
-    private function deleteImage(string $path): void
-    {
-        Storage::disk('public')->delete($path);
     }
 }

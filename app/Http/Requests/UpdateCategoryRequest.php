@@ -20,7 +20,7 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'name'   => ['sometimes', 'string', 'max:255'],
-            'image'  => ['sometimes', 'image', 'max:2048'],
+            'image'  => ['sometimes', 'url'],
             'status' => ['sometimes', Rule::enum(CategoryStatus::class)],
         ];
     }

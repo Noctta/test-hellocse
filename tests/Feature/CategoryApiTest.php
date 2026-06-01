@@ -3,12 +3,7 @@
 use App\Enums\CategoryStatus;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-
-beforeEach(function () {
-    Storage::fake('public');
-});
 
 
 // -------------------- INDEX ------------------------------
@@ -53,7 +48,7 @@ it('returns 404 when category does not exist', function () {
 it('can create a category', function () {
     $payload = [
         'name'   => 'Électronique',
-        'image'  => UploadedFile::fake()->image('category.jpg'),
+        'image'  => "https://www.hellocse.fr/images/logo/hellocse.svg?v=2",
         'status' => CategoryStatus::ONLINE,
     ];
 
@@ -63,14 +58,11 @@ it('can create a category', function () {
         ->assertJsonPath('data.status', 'online');
 
     expect(Category::count())->toBe(1);
-
-    $category = Category::first();
-    Storage::disk('public')->assertExists($category->image);
 });
 
 it('fails to create a category without name', function () {
     $payload = [
-        'image' => UploadedFile::fake()->image('category.jpg'),
+        'image' => "https://www.hellocse.fr/images/logo/hellocse.svg?v=2",
     ];
 
     $this->postJson('/api/categories', $payload)
@@ -81,7 +73,7 @@ it('fails to create a category without name', function () {
 it('fails to create a category with invalid status', function () {
     $payload = [
         'name'   => 'Test',
-        'image'  => UploadedFile::fake()->image('category.jpg'),
+        'image'  => "https://www.hellocse.fr/images/logo/hellocse.svg?v=2",
         'status' => 'invalide',
     ];
 
@@ -109,13 +101,12 @@ it('can update a category image', function () {
     $oldImage = $category->image;
 
     $this->putJson("/api/categories/{$category->id}", [
-        'image' => UploadedFile::fake()->image('new.jpg'),
+        'image' => "https://www.hellocse.fr/images/logo/hellocse.svg?v=2",
     ])->assertOk();
 
     $category->refresh();
 
     expect($category->image)->not->toBe($oldImage);
-    Storage::disk('public')->assertExists($category->image);
 });
 
 // -------------------- DESTROY ------------------------------

@@ -21,7 +21,7 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'name'   => ['required', 'string', 'max:255'],
-            'image'  => ['required', 'image', 'max:2048'],
+            'image'  => ['required', 'url',],
             'status' => ['sometimes', Rule::enum(CategoryStatus::class)],
         ];
     }
