@@ -21,4 +21,18 @@ class ProductFactory extends Factory
             'category_id' => Category::factory(),
         ];
     }
+
+    public function online(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'status' => ProductStatus::ONLINE,
+        ]);
+    }
+
+    public function draft(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'status' => ProductStatus::DRAFT,
+        ]);
+    }
 }
